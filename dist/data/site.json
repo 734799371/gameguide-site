@@ -1,0 +1,94 @@
+{
+  "siteName": "GameGuidePro",
+  "tagline": "Your Ultimate Game Walkthrough & Strategy Hub",
+  "domain": "gameguidepro.com",
+  "url": "https://gameguidepro.com",
+  "locale": "en_US",
+  "language": "en",
+  "author": "GameGuidePro Team",
+  "description": "Free game walkthroughs, strategy guides, tips and tricks for popular games. Master every game with our expert guides.",
+  "keywords": "game guides, walkthrough, strategy, tips, tricks, cheats, gaming",
+  "adClient": "ca-pub-XXXXXXXXXXXXXXXX",
+  "games": [
+    {
+      "slug": "elden-ring",
+      "title": "Elden Ring",
+      "category": "Action RPG",
+      "platform": "PC / PS5 / Xbox",
+      "description": "Complete Elden Ring walkthrough with boss strategies, build guides, and hidden secrets.",
+      "guides": ["walkthrough", "boss-guide", "builds", "secrets", "beginner-tips"]
+    },
+    {
+      "slug": "zelda-totk",
+      "title": "The Legend of Zelda: Tears of the Kingdom",
+      "category": "Adventure",
+      "platform": "Nintendo Switch",
+      "description": "Full Tears of the Kingdom guide with shrine solutions, side quests, and ability unlocks.",
+      "guides": ["walkthrough", "shrines", "side-quests", "abilities", "beginner-tips"]
+    },
+    {
+      "slug": "baldurs-gate-3",
+      "title": "Baldur's Gate 3",
+      "category": "RPG",
+      "platform": "PC / PS5",
+      "description": "Baldur's Gate 3 complete guide with class builds, romance options, and quest walkthroughs.",
+      "guides": ["walkthrough", "class-builds", "romance", "companions", "beginner-tips"]
+    },
+    {
+      "slug": "hogwarts-legacy",
+      "title": "Hogwarts Legacy",
+      "category": "Action RPG",
+      "platform": "PC / PS5 / Xbox / Switch",
+      "description": "Hogwarts Legacy guide with house selection, spell unlocks, and collectible locations.",
+      "guides": ["walkthrough", "spells", "collectibles", "houses", "beginner-tips"]
+    },
+    {
+      "slug": "starfield",
+      "title": "Starfield",
+      "category": "Action RPG",
+      "platform": "PC / Xbox",
+      "description": "Starfield walkthrough with ship building, outpost guides, and faction questlines.",
+      "guides": ["walkthrough", "ship-building", "outposts", "factions", "beginner-tips"]
+    },
+    {
+      "slug": "diablo-4",
+      "title": "Diablo IV",
+      "category": "Action RPG",
+      "platform": "PC / PS5 / Xbox",
+      "description": "Diablo IV guide with class builds, endgame strategies, and seasonal content.",
+      "guides": ["walkthrough", "class-builds", "endgame", "seasons", "beginner-tips"]
+    },
+    {
+      "slug": "palworld",
+      "title": "Palworld",
+      "category": "Survival",
+      "platform": "PC / Xbox",
+      "description": "Palworld guide with Pal locations, base building, and breeding combos.",
+      "guides": ["walkthrough", "pal-locations", "base-building", "breeding", "beginner-tips"]
+    },
+    {
+      "slug": "ff7-rebirth",
+      "title": "Final Fantasy VII Rebirth",
+      "category": "RPG",
+      "platform": "PS5",
+      "description": "FF7 Rebirth guide with chapter walkthroughs, materia setups, and side activities.",
+      "guides": ["walkthrough", "materia", "side-activities", "characters", "beginner-tips"]
+    },
+    {
+      "slug": "palia",
+      "title": "Palia",
+      "category": "Cozy Sim",
+      "platform": "PC / Switch",
+      "description": "Palia guide with cooking recipes, furniture crafting, and romance options.",
+      "guides": ["walkthrough", "cooking", "crafting", "romance", "beginner-tips"]
+    },
+    {
+      "slug": "wukong",
+      "title": "Black Myth: Wukong",
+      "category": "Action RPG",
+      "platform": "PC / PS5",
+      "description": "Black Myth Wukong guide with boss strategies, spell upgrades, and secret areas.",
+      "guides": ["walkthrough", "boss-guide", "spells", "secrets", "beginner-tips"]
+    }
+  ]
+}

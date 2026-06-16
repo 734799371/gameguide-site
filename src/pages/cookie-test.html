@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cookie Consent Test</title>
+<style>
+[hidden] { display: none !important; }
+.cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000; background: #1a1a2e; padding: 20px; border-top: 1px solid #444; }
+.cookie-banner-content { max-width: 800px; margin: 0 auto; color: #ccc; }
+.cookie-banner-actions { display: flex; gap: 12px; margin-top: 12px; }
+.cookie-btn { padding: 8px 20px; border-radius: 6px; border: none; cursor: pointer; font-size: 0.9rem; font-weight: 500; }
+.cookie-btn-accept { background: #6c63ff; color: #fff; }
+.cookie-btn-reject { background: #1a1a2e; color: #ccc; border: 1px solid #555; }
+.cookie-btn-manage { background: transparent; color: #aaa; border: 1px solid #555; }
+.cookie-modal-overlay { position: fixed; inset: 0; z-index: 1001; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; }
+.cookie-modal { background: #1a1a2e; padding: 30px; border-radius: 12px; max-width: 500px; width: 90%; color: #ccc; }
+.cookie-modal h2 { color: #fff; margin-bottom: 16px; }
+.cookie-category { margin-bottom: 16px; }
+.cookie-category-header { display: flex; align-items: center; gap: 8px; }
+.cookie-category-desc { font-size: 0.85rem; color: #888; margin-top: 4px; }
+.cookie-modal-actions { display: flex; gap: 12px; margin-top: 20px; }
+#test-log { position: fixed; top: 10px; right: 10px; background: #000; color: #0f0; padding: 10px; font-size: 12px; z-index: 9999; max-height: 200px; overflow: auto; font-family: monospace; }
+</style>
+</head>
+<body>
+<h1 style="color:#fff;text-align:center;margin-top:100px;">Cookie Consent Test Page</h1>
+<div id="test-log"></div>
+
+<div class="cookie-banner" id="cookie-banner" role="dialog" hidden>
+  <div class="cookie-banner-content">
+    <p>We use cookies. <a href="#" style="color:#6c63ff;">Learn more</a>.</p>
+    <div class="cookie-banner-actions">
+      <button class="cookie-btn cookie-btn-reject" id="cookie-reject-all">Reject All</button>
+      <button class="cookie-btn cookie-btn-manage" id="cookie-manage">Manage Preferences</button>
+      <button class="cookie-btn cookie-btn-accept" id="cookie-accept-all">Accept All</button>
+    </div>
+  </div>
+</div>
+
+<div class="cookie-modal-overlay" id="cookie-modal" role="dialog" hidden>
+  <div class="cookie-modal">
+    <h2>Cookie Preferences</h2>
+    <div class="cookie-category">
+      <div class="cookie-category-header">
+        <input type="checkbox" id="consent-functional" checked disabled>
+        <label for="consent-functional">Functional (Required)</label>
+      </div>
+      <p class="cookie-category-desc">Essential cookies.</p>
+    </div>
+    <div class="cookie-category">
+      <div class="cookie-category-header">
+        <input type="checkbox" id="consent-analytics">
+        <label for="consent-analytics">Analytics</label>
+      </div>
+      <p class="cookie-category-desc">Help us understand traffic.</p>
+    </div>
+    <div class="cookie-category">
+      <div class="cookie-category-header">
+        <input type="checkbox" id="consent-marketing">
+        <label for="consent-marketing">Marketing / Advertising</label>
+      </div>
+      <p class="cookie-category-desc">Personalized ads.</p>
+    </div>
+    <div class="cookie-modal-actions">
+      <button class="cookie-btn cookie-btn-reject" id="cookie-save-reject">Reject All</button>
+      <button class="cookie-btn cookie-btn-accept" id="cookie-save-prefs">Save Preferences</button>
+      <button class="cookie-btn cookie-btn-accept" id="cookie-save-accept-all">Accept All</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var logEl = document.getElementById('test-log');
+  function log(msg) { logEl.innerHTML += msg + '<br>'; }
+
+  var STORAGE_KEY = 'ggp_cookie_consent';
+
+  function getConsent() {
+    try { var d = localStorage.getItem(STORAGE_KEY); return d ? JSON.parse(d) : null; } catch(e) { return null; }
+  }
+  function saveConsent(prefs) {
+    prefs.version = '1.0'; prefs.timestamp = new Date().toISOString();
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs)); log('Saved: ' + JSON.stringify(prefs)); } catch(e) { log('Save error: ' + e); }
+  }
+  function hideAll() {
+    var b = document.getElementById('cookie-banner'); if (b) { b.setAttribute('hidden', ''); log('Banner hidden'); }
+    var m = document.getElementById('cookie-modal'); if (m) { m.setAttribute('hidden', ''); log('Modal hidden'); }
+    document.body.style.overflow = '';
+  }
+  function showBanner() {
+    var b = document.getElementById('cookie-banner');
+    if (b) { b.removeAttribute('hidden'); log('Banner shown (hidden=' + b.hasAttribute('hidden') + ')'); }
+  }
+  function showModal() {
+    var m = document.getElementById('cookie-modal');
+    if (m) { m.removeAttribute('hidden'); log('Modal shown (hidden=' + m.hasAttribute('hidden') + ')'); }
+    document.body.style.overflow = 'hidden';
+  }
+  function hideModal() {
+    var m = document.getElementById('cookie-modal'); if (m) m.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+  }
+  function doAcceptAll() { log('doAcceptAll called'); saveConsent({functional:true,analytics:true,marketing:true,method:'accept_all'}); hideAll(); }
+  function doRejectAll() { log('doRejectAll called'); saveConsent({functional:true,analytics:false,marketing:false,method:'reject_all'}); hideAll(); }
+  function doSavePrefs() {
+    log('doSavePrefs called');
+    var a = document.getElementById('consent-analytics').checked;
+    var m = document.getElementById('consent-marketing').checked;
+    saveConsent({functional:true,analytics:a,marketing:m,method:'custom'}); hideAll();
+  }
+
+  log('=== INIT START ===');
+  var consent = getConsent();
+  log('Existing consent: ' + JSON.stringify(consent));
+
+  if (!consent) {
+    showBanner();
+    log('Binding buttons...');
+
+    var btns = {
+      'cookie-accept-all': doAcceptAll,
+      'cookie-reject-all': doRejectAll,
+      'cookie-manage': showModal,
+      'cookie-save-accept-all': doAcceptAll,
+      'cookie-save-reject': doRejectAll,
+      'cookie-save-prefs': doSavePrefs
+    };
+    for (var id in btns) {
+      var el = document.getElementById(id);
+      if (el) { el.addEventListener('click', btns[id]); log('Bound: #' + id); }
+      else { log('NOT FOUND: #' + id); }
+    }
+
+    // Overlay click to close modal
+    var overlay = document.getElementById('cookie-modal');
+    if (overlay) overlay.addEventListener('click', function(e) { if (e.target === overlay) hideModal(); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { var m = document.getElementById('cookie-modal'); if (m && !m.hasAttribute('hidden')) hideModal(); } });
+  } else {
+    hideAll();
+    log('Consent exists, banner hidden');
+  }
+  log('=== INIT END ===');
+})();
+</script>
+</body>
+</html>
